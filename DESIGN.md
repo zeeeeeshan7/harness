@@ -54,7 +54,7 @@ Loop: `step_fn(state) -> Step`, then hooks `on_step`, then `tool_fn(call) -> Too
 
 ## Hooks
 ```python
-class Hook(Protocol):
+class Hook:   # base class with no-op defaults; subclass and override
     def on_step(self, state, step) -> Action | None: ...
     def on_tool_call(self, state, call) -> ToolCall | ToolResult | None: ...   # return a ToolResult to short-circuit (chaos)
     def on_tool_result(self, state, call, result) -> ToolResult | None: ...    # return a new result to replace it

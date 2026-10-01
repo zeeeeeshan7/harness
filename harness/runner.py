@@ -66,7 +66,7 @@ class Runner:
         if result is None:
             try:
                 result = self.tool_fn(call)
-            except Exception as e:  # a failing tool is data for the agent, not a crash
+            except Exception as e:  # noqa: BLE001 - a failing tool is data for the agent, not a crash
                 result = ToolResult(False, "", f"{type(e).__name__}: {e}")
         for h in self.hooks:
             r = h.on_tool_result(state, call, result)

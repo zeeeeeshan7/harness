@@ -43,7 +43,7 @@ def test_tool_exception_becomes_failed_result():
 
     r = Runner(scripted([call(), finish()]), boom, BIG).run()
     assert r.status == "done"
-    res = [e for e in r.events if e.kind == "tool_result"][0]
+    res = next(e for e in r.events if e.kind == "tool_result")
     assert res.data["ok"] is False and "slow" in res.data["error"]
 
 
@@ -77,7 +77,7 @@ def test_hook_replaces_call_and_result():
             return ToolResult(True, res.output + "!")
 
     r = Runner(scripted([call(), finish()]), ok_tool, BIG, hooks=[Swap()]).run()
-    out = [e for e in r.events if e.kind == "tool_result"][0].data["output"]
+    out = next(e for e in r.events if e.kind == "tool_result").data["output"]
     assert out == "ran swapped!"
 
 
